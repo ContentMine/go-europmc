@@ -1,0 +1,89 @@
+<!DOCTYPE
+article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.1 20151215//EN"
+"JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink"
+xmlns:mml="http://www.w3.org/1998/Math/MathML"
+article-type="review-article">
+  <?properties open_access?>
+  <?DTDIdentifier.IdentifierValue -//NLM//DTD Journal Publishing DTD v2.3 20031101//EN?>
+  <?DTDIdentifier.IdentifierType public?>
+  <?SourceDTD.DTDName journalpublishing.dtd?>
+  <?SourceDTD.Version 2.3?>
+  <?ConverterInfo.XSLTName jp2nlmx2.xsl?>
+  <?ConverterInfo.Version 1?>
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="nlm-ta">Some proceedings</journal-id>
+      <journal-id journal-id-type="iso-abbrev">Sm Proc</journal-id>
+      <journal-id journal-id-type="publisher-id">Someone</journal-id>
+      <journal-id journal-id-type="pmc">sm1</journal-id>
+      <journal-title-group>
+        <journal-title>International Proceedings of Test Data</journal-title>
+      </journal-title-group>
+      <issn pub-type="ppub">1234-1234</issn>
+      <issn pub-type="epub">1234-4321</issn>
+      <publisher>
+        <publisher-name>Johnny Appleseed</publisher-name>
+        <publisher-loc>Cambridge, UK</publisher-loc>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="pmcid">3213213</article-id>
+      <article-id pub-id-type="pmid">12312312</article-id>
+      <title-group>
+        <article-title>Test title</article-title>
+        <alt-title alt-title-type="running-head">Test</alt-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Dales</surname>
+            <given-names>Michael W.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group>
+      <aff id="aff1">
+        <label>1</label>
+        <addr-line>Digital Flapjack Ltd, Cambridge, UK</addr-line>
+      </aff>
+      <pub-date pub-type="collection">
+        <month>11</month>
+        <year>2018</year>
+      </pub-date>
+      <pub-date pub-type="epub">
+        <day>2</day>
+        <month>11</month>
+        <year>2018</year>
+      </pub-date>
+      <volume>1</volume>
+      <issue>2</issue>
+      <permissions>
+        <copyright-statement>Dales et al.</copyright-statement>
+        <copyright-year>2018</copyright-year>
+        <license xlink:href="http://creativecommons.org/licenses/by/4.0/">
+          <license-p>This is an open-access article distributed
+          under the terms of the Creative Commons Attribution
+          License, which permits unrestricted use, distribution,
+          and reproduction in any medium, provided the original
+          author and source are properly credited.</license-p>
+        </license>
+      </permissions>
+      <abstract>
+        <p>Hello, world!</p>
+      </abstract>
+      <counts>
+        <page-count count="15" />
+      </counts>
+    </article-meta>
+  </front>
+  <body>
+  </body>
+  <back>
+  </back>
+</article>
