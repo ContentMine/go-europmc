@@ -51,10 +51,31 @@ type JournalMeta struct {
 	TitleGroup JournalTitleGroup `xml:"journal-title-group"`
 }
 
+type ArticleID struct {
+	XMLName xml.Name `xml:"article-id"`
+	Type    string   `xml:"pub-id-type,attr"`
+	ID      string   `xml:",chardata"`
+}
+
+type License struct {
+	XMLName xml.Name `xml:"license"`
+	Link    string   `xml:"href,attr"`
+	Text    string   `xml:"license-p"`
+}
+
+type Permissions struct {
+	XMLName            xml.Name `xml:"permissions"`
+	CopyrightStatement string   `xml:"copyright-statement"`
+	CopyrightYear      string   `xml:"copyright-year"`
+	License            License  `xml:"license"`
+}
+
 type ArticleMeta struct {
 	XMLName           xml.Name          `xml:"article-meta"`
+	IDs               []ArticleID       `xml:"article-id"`
 	TitleGroup        ArticleTitleGroup `xml:"title-group"`
 	ContributorGroups []ContribGroup    `xml:"contrib-group"`
+	Permissions       Permissions       `xml:"permissions"`
 }
 
 type Front struct {
@@ -108,4 +129,25 @@ func (paper OpenXMLPaper) FirstAuthor() *ContributorName {
 		}
 	}
 	return nil
+}
+
+func (paper OpenXMLPaper) ArticleID(id_type string) *string {
+	for _, id := range paper.Front.ArticleMeta.IDs {
+		if id.Type == id_type {
+			return &(id.ID)
+		}
+	}
+	return nil
+}
+
+func (paper OpenXMLPaper) PMCID() *string {
+	return paper.ArticleID("pmcid")
+}
+
+func (paper OpenXMLPaper) PMID() *string {
+	return paper.ArticleID("pmid")
+}
+
+func (paper OpenXMLPaper) LicenseURL() string {
+	return paper.Front.ArticleMeta.Permissions.License.Link
 }
