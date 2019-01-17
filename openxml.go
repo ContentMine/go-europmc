@@ -21,6 +21,10 @@ import (
 	"os"
 )
 
+// Base URL for EuroPMC REST API
+const EUROPMC_API_URL string = "https://www.ebi.ac.uk/europepmc/webservices/rest"
+
+
 type ContributorName struct {
 	Surname    string `xml:"surname"`
 	GivenNames string `xml:"given-names"`
@@ -102,6 +106,18 @@ func LoadPaperXMLFromFile(path string) (OpenXMLPaper, error) {
 	err = xml.NewDecoder(f).Decode(&paper)
 	return paper, err
 }
+
+
+// Getting things from EuroPMC
+
+func FullTextURL(pmcid string) string {
+	return fmt.Sprintf("%s/PMC%s/fullTextXML", EUROPMC_API_URL, pmcid)
+}
+
+func SupplementaryFilesURL(pmcid string) string {
+	return fmt.Sprintf("%s/PMC%s/supplementaryFiles", EUROPMC_API_URL, pmcid)
+}
+
 
 // Convenience functions
 
