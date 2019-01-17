@@ -71,6 +71,10 @@ func TestLoadTestXML(t *testing.T) {
 	if paper.LicenseURL() != "http://creativecommons.org/licenses/by/4.0/" {
 		t.Errorf("Got unxpected license URL: %s", paper.LicenseURL())
 	}
+
+	if len(paper.Keywords()) != 2 {
+		t.Errorf("Got wrong number of keywords: %v", paper.Keywords())
+	}
 }
 
 func TestLoadTestEmptyXML(t *testing.T) {
@@ -106,5 +110,9 @@ func TestLoadTestEmptyXML(t *testing.T) {
 
 	if paper.LicenseURL() != "" {
 		t.Errorf("Got unxpected license URL: %s", paper.LicenseURL())
+	}
+
+	if len(paper.Keywords()) != 0 {
+		t.Errorf("Got wrong number of keywords: %v", paper.Keywords())
 	}
 }

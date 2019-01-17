@@ -18,12 +18,13 @@ package europmc
 import (
 	"encoding/xml"
 	"fmt"
+	"io/ioutil"
+	"net/http"
 	"os"
 )
 
 // Base URL for EuroPMC REST API
 const EUROPMC_API_URL string = "https://www.ebi.ac.uk/europepmc/webservices/rest"
-
 
 type ContributorName struct {
 	Surname    string `xml:"surname"`
@@ -74,12 +75,20 @@ type Permissions struct {
 	License            License  `xml:"license"`
 }
 
+type KeywordGroup struct {
+	XMLName  xml.Name `xml:"kwd-group"`
+	Title    string   `xml:"title"`
+	Language string   `xml:"lang,attr"`
+	Keywords []string `xml:"kwd"`
+}
+
 type ArticleMeta struct {
 	XMLName           xml.Name          `xml:"article-meta"`
 	IDs               []ArticleID       `xml:"article-id"`
 	TitleGroup        ArticleTitleGroup `xml:"title-group"`
 	ContributorGroups []ContribGroup    `xml:"contrib-group"`
 	Permissions       Permissions       `xml:"permissions"`
+	KeywordGroup      KeywordGroup      `xml:"kwd-group"`
 }
 
 type Front struct {
@@ -107,7 +116,6 @@ func LoadPaperXMLFromFile(path string) (OpenXMLPaper, error) {
 	return paper, err
 }
 
-
 // Getting things from EuroPMC
 
 func FullTextURL(pmcid string) string {
@@ -118,6 +126,35 @@ func SupplementaryFilesURL(pmcid string) string {
 	return fmt.Sprintf("%s/PMC%s/supplementaryFiles", EUROPMC_API_URL, pmcid)
 }
 
+func FetchFullText(pmcid string) (*OpenXMLPaper, error) {
+
+	if len(pmcid) == 0 {
+		return nil, fmt.Errorf("Empty PMCID provided")
+	}
+
+	resp, resp_err := http.Get(FullTextURL(pmcid))
+	if resp_err != nil {
+		return nil, resp_err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return nil, fmt.Errorf("Status code %d", resp.StatusCode)
+		} else {
+			return nil, fmt.Errorf("Status code %d: %s", resp.StatusCode, body)
+		}
+	}
+
+	paper := OpenXMLPaper{}
+	err := xml.NewDecoder(resp.Body).Decode(&paper)
+	if err != nil {
+		return nil, err
+	}
+
+	return &paper, nil
+}
 
 // Convenience functions
 
@@ -166,4 +203,8 @@ func (paper OpenXMLPaper) PMID() *string {
 
 func (paper OpenXMLPaper) LicenseURL() string {
 	return paper.Front.ArticleMeta.Permissions.License.Link
+}
+
+func (paper OpenXMLPaper) Keywords() []string {
+	return paper.Front.ArticleMeta.KeywordGroup.Keywords
 }

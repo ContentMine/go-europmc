@@ -74,6 +74,11 @@ article-type="review-article">
           author and source are properly credited.</license-p>
         </license>
       </permissions>
+      <kwd-group xml:lang="en">
+        <title>Keywords</title>
+        <kwd>Test</kwd>
+        <kwd>Data</kwd>
+      </kwd-group>
       <abstract>
         <p>Hello, world!</p>
       </abstract>
